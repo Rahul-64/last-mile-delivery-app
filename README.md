@@ -1,45 +1,52 @@
-🚚 Last-Mile Delivery Confirmation System (LensKart Case Study)
+# 🚚 Last-Mile Delivery Confirmation System
 
-A full-stack Last-Mile Delivery App that simulates how e-commerce companies like LensKart / Amazon / Flipkart confirm deliveries using Shipment ID + OTP verification.
+## 📌 Overview
 
-This project demonstrates backend-driven business logic, OTP-based delivery validation, and mobile app integration using React Native.
+This project is a Last-Mile Delivery Confirmation System that simulates how real e-commerce companies (like LensKart, Amazon, Flipkart) confirm deliveries using a Shipment ID + OTP verification mechanism.
 
-📌 Problem Statement
+The system ensures:
 
-In last-mile delivery systems, it is critical to ensure that:
+A delivery can be confirmed only once
 
-A delivery is confirmed only once
+OTP verification is handled securely on the backend
 
-The correct customer receives the order
+Delivery status and metadata are tracked properly
 
-Delivery partners cannot falsely mark orders as delivered
+## 🎯 Problem Statement
 
-This project solves that problem using:
+In last-mile delivery:
+
+Fake or duplicate delivery confirmations must be avoided
+
+The correct customer must receive the product
+
+Delivery partners should verify delivery securely
+
+This project solves the above using:
 
 Unique Shipment ID
 
 One-Time Password (OTP)
 
-Backend-controlled verification and status tracking
+Backend-controlled validation
 
-Solution Overview
-Flow:
+## 🧩 Solution Flow
 
-Customer places an order
+1️⃣ Customer places an order
 
-Backend generates:
-
-Shipment ID
-
-OTP
-
-Delivery partner enters:
+2️⃣ Backend generates:
 
 Shipment ID
 
 OTP
 
-Backend verifies:
+3️⃣ Delivery partner enters:
+
+Shipment ID
+
+OTP
+
+4️⃣ Backend verifies:
 
 Shipment existence
 
@@ -47,10 +54,11 @@ OTP correctness
 
 Delivery status
 
-Delivery result is returned with proper status
+5️⃣ Backend returns result with proper HTTP status codes
 
-🛠 Tech Stack
-Backend
+## 🛠 Tech Stack
+### 🔹 Backend
+
 
 Node.js
 
@@ -62,7 +70,7 @@ mysql2 (Promise-based)
 
 dotenv
 
-Frontend (Mobile App)
+### 🔹 Frontend (Mobile App)
 
 React Native
 
@@ -70,67 +78,23 @@ Expo (Expo Go)
 
 TypeScript
 
-
-🗂 Project Structure
-LENSKART_LAST_MILE_DELIVERY/
-│
-├── backend/
-│   ├── src/
-│   │   ├── controllers/
-│   │   │   └── deliveryController.js
-│   │   ├── services/
-│   │   │   └── deliveryService.js
-│   │   ├── routes/
-│   │   │   └── deliveryRoutes.js
-│   │   ├── config/
-│   │   │   ├── db.js
-│   │   │   └── env.js
-│   │   └── server.js
-│   ├── .env.example
-│   └── package.json
-│
-├── mobile-app/
-│   ├── app/
-│   │   └── (tabs)/
-│   │       └── index.tsx
-│   ├── src/
-│   │   ├── config/
-│   │   │   └── api.ts
-│   │   ├── utils/
-│   │   │   └── formatTime.ts
-│   │   └── services/
-│   │       └── deliveryApi.ts
-│   └── package.json
-│
-└── README.md
+## 🗂 Project Structure
+<img width="885" height="545" alt="image" src="https://github.com/user-attachments/assets/cbc6938c-e6a0-4bd9-8b8b-97ec77ef837f" />
 
 
-🗄 Database Design
-Database
+## 🗄 Database Design
+
+### 📌 Database
 CREATE DATABASE last_mile_delivery;
 
-Table: shipments
-CREATE TABLE shipments (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  shipment_id VARCHAR(50) UNIQUE NOT NULL,
-  customer_name VARCHAR(100),
-  otp_code VARCHAR(10),
-  status ENUM('Pending', 'Delivered') DEFAULT 'Pending',
-  delivered_at TIMESTAMP NULL,
-  delivered_by VARCHAR(100)
-);
+### 📌 Table: shipments
 
-Purpose
-
-Tracks shipment lifecycle
-
-Prevents duplicate delivery
-
-Stores OTP and delivery metadata
+ <img width="682" height="307" alt="image" src="https://github.com/user-attachments/assets/354c3d8c-8fb0-41d3-ad8d-855694d29cc9" />
 
 
-🔗 Backend API Endpoints
-1️⃣ Place Order
+## 🔗 API Endpoints
+
+### 🚀 Place Order
 POST /api/place-order
 
 
@@ -148,7 +112,7 @@ Response
   "otp_code": "482193"
 }
 
-2️⃣ Confirm Delivery
+### 🚚 Confirm Delivery
 POST /api/confirm-delivery
 
 
@@ -160,96 +124,109 @@ Request
   "delivered_by": "DeliveryBoy01"
 }
 
-📡 HTTP Status Codes Used
+## 📡 HTTP Status Codes Used
 Status Code	Meaning
-200 OK	Successful delivery
+200 OK	Delivery successful
 400 Bad Request	Missing required fields
 401 Unauthorized	Invalid OTP
 404 Not Found	Shipment ID not found
 409 Conflict	Shipment already delivered
-500 Internal Server Error	Server error
+500 Internal Server Error	Server failure
 
-🧠 Backend Business Logic
+## 🧠 Backend Business Logic
 
 Shipment ID must exist
 
 OTP must match
 
-Delivery can happen only once
+Delivery allowed only once
 
 Re-verification returns already_delivered
 
-Backend controls all delivery rules (frontend is thin)
+All business rules enforced on backend
+
+## ⚠️ Frontend is a thin client — backend controls all logic.
 
 📱 Mobile App UI Flow
-Step 1
+🟢 Step 1: Place Order
 
-Enter customer name 
+Enter customer name
 
-Place order - means you are placing order in frontend
+Click Place Order
 
-Step 2
+🟢 Step 2: System Generates
 
-Shipment ID & OTP displayed (demo purpose)
+Shipment ID (displayed)
 
-Step 3
+OTP (displayed for demo)
 
-Delivery partner enters:
+🟢 Step 3: Delivery Partner Inputs
 
 Shipment ID (alphanumeric)
 
 OTP (numeric)
 
-Step 4
+🟢 Step 4: Verify
 
-Verify delivery
+Click Verify
 
-Result shown in human-readable format
+Result shown on screen
 
-App interfaces
 
-Intro
+## 📱 App interfaces
+
+### 👋 Intro
+
 <img width="499" height="622" alt="image" src="https://github.com/user-attachments/assets/06e34a6c-5612-4f04-97f9-6bffecff2ca0" />
 
-Placing order from frontend
+
+### 🛒 Placing order from frontend
+
 <img width="497" height="759" alt="image" src="https://github.com/user-attachments/assets/236f6f23-dc64-411f-b60f-0bfb0603f81b" />
 
-✅ Successful Delivery
+### ✅ Successful Delivery
 
 <img width="474" height="913" alt="image" src="https://github.com/user-attachments/assets/55f58639-d22f-40e8-9a2b-38122f12f0fa" />
 
-⚠️ Already Delivered
+
+### ⚠️ Already Delivered
+
 <img width="480" height="929" alt="image" src="https://github.com/user-attachments/assets/940e51af-7e55-4bee-813a-4b4723076f28" />
 
-⚠️ Missing Fields
+### ⚠️ Missing Fields
 
-#shipmentID missing
+### shipmentID missing
+
 <img width="481" height="870" alt="image" src="https://github.com/user-attachments/assets/9a1ed0a7-24f7-4c76-8c25-a3a187492ca2" />
 
-#OTP missing
+### OTP missing
+
 <img width="501" height="897" alt="image" src="https://github.com/user-attachments/assets/bca44e20-2026-46c9-8fec-ec2ee19be53f" />
 
-❌ Wrong OTP
+### ❌ Wrong OTP
+
 <img width="493" height="896" alt="image" src="https://github.com/user-attachments/assets/c2af1660-16fb-4e90-9f84-7d09365b9597" />
 
 
 
-⚙️ Setup Instructions
-🔹 Backend Setup
+## ⚙️ Setup Instructions
+
+### 🔹 Backend Setup
 cd backend
 npm install
 cp .env.example .env
 npm run dev
 
-🔹 Mobile App Setup
+
+### 🔹 Mobile App Setup
 cd mobile-app
 npm install
 npx expo start
 
 
-📌 Use Expo Go on a physical Android device for best results.
+## 📌 Use Expo Go on a physical Android device for best results.
 
-⚠️ Important Notes
+### ⚠️ Important Notes
 
 localhost works only for emulator
 
@@ -259,7 +236,7 @@ For physical device, update API base URL with system IP
 
 OTP is shown only for demo/testing
 
-🧪 Test Scenarios Covered
+## 🧪 Test Scenarios Covered
 
 ✔ Correct OTP
 ✔ Wrong OTP
@@ -268,7 +245,7 @@ OTP is shown only for demo/testing
 ✔ Missing OTP
 ✔ Network / server error handling
 
-🏆 Key Learnings & Highlights
+## 🏆 Key Learnings & Highlights
 
 Separation of concerns (Controller / Service / Config)
 
@@ -279,6 +256,11 @@ Backend-driven business logic
 React Native ↔ Node.js integration
 
 Real-world debugging and edge-case handling
+
+
+## 👨‍💻 Author
+### Rahul Kumar
+### GitHub: @Rahul-64
 
 
 
